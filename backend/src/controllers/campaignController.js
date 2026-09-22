@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const { Campaign, User, Donation, Category } = require('../models');
 const asyncHandler = require('../utils/asyncHandler');
 
@@ -25,13 +26,32 @@ exports.listar = asyncHandler(async (req, res) => {
     : campanhas;
 
   res.json(filtradas);
+=======
+const { Campaign, User, Donation } = require('../models');
+const asyncHandler = require('../utils/asyncHandler');
+
+exports.listar = asyncHandler(async (req, res) => {
+  const { areaCientifica } = req.query;
+  const where = { status: 'ativa' };
+  if (areaCientifica) where.areaCientifica = areaCientifica;
+
+  const campanhas = await Campaign.findAll({
+    where,
+    include: [{ model: User, as: 'autor', attributes: ['id', 'nome', 'instituicao'] }],
+    order: [['createdAt', 'DESC']],
+  });
+  res.json(campanhas);
+>>>>>>> origin/master
 });
 
 exports.obterPorId = asyncHandler(async (req, res) => {
   const campanha = await Campaign.findByPk(req.params.id, {
     include: [
       { model: User, as: 'autor', attributes: ['id', 'nome', 'instituicao'] },
+<<<<<<< HEAD
       { model: Category, as: 'categoria' },
+=======
+>>>>>>> origin/master
       { model: Donation, as: 'doacoes', include: [{ model: User, as: 'apoiador', attributes: ['nome'] }] },
     ],
   });
@@ -40,16 +60,24 @@ exports.obterPorId = asyncHandler(async (req, res) => {
 });
 
 exports.criar = asyncHandler(async (req, res) => {
+<<<<<<< HEAD
   const { titulo, descricao, categoryId, tema, palavrasChave, metaFinanceira, imagemCapaUrl, prazoFinal } = req.body;
+=======
+  const { titulo, descricao, areaCientifica, metaFinanceira, imagemCapaUrl, prazoFinal } = req.body;
+>>>>>>> origin/master
   if (!titulo || !descricao || !metaFinanceira) {
     return res.status(400).json({ erro: true, mensagem: 'Campos obrigatórios ausentes' });
   }
   const campanha = await Campaign.create({
     titulo,
     descricao,
+<<<<<<< HEAD
     categoryId: categoryId || null,
     tema: tema || null,
     palavrasChave,
+=======
+    areaCientifica,
+>>>>>>> origin/master
     metaFinanceira,
     imagemCapaUrl,
     prazoFinal,
@@ -60,6 +88,7 @@ exports.criar = asyncHandler(async (req, res) => {
 });
 
 exports.minhasCampanhas = asyncHandler(async (req, res) => {
+<<<<<<< HEAD
   const campanhas = await Campaign.findAll({
     where: { autorId: req.usuario.id },
     include: [{ model: Category, as: 'categoria' }],
@@ -109,6 +138,12 @@ exports.atualizar = asyncHandler(async (req, res) => {
   res.json(campanha);
 });
 
+=======
+  const campanhas = await Campaign.findAll({ where: { autorId: req.usuario.id }, order: [['createdAt', 'DESC']] });
+  res.json(campanhas);
+});
+
+>>>>>>> origin/master
 exports.moderar = asyncHandler(async (req, res) => {
   const { status } = req.body; // ativa | encerrada
   const campanha = await Campaign.findByPk(req.params.id);

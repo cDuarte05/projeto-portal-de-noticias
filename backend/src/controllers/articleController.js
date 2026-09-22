@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const { Article, User, Category } = require('../models');
 const asyncHandler = require('../utils/asyncHandler');
 
@@ -18,22 +19,46 @@ exports.listar = asyncHandler(async (req, res) => {
   const artigos = await Article.findAll({
     where,
     include: INCLUDE_AUTOR_CATEGORIA,
+=======
+const { Article, User } = require('../models');
+const asyncHandler = require('../utils/asyncHandler');
+
+// Lista publicações públicas (com filtro opcional por tipo: noticia_escolar, poema, etc.)
+exports.listar = asyncHandler(async (req, res) => {
+  const { tipo, busca } = req.query;
+  const where = { status: 'publicado' };
+  if (tipo) where.tipo = tipo;
+
+  const artigos = await Article.findAll({
+    where,
+    include: [{ model: User, as: 'autor', attributes: ['id', 'nome', 'tipo', 'instituicao'] }],
+>>>>>>> origin/master
     order: [['createdAt', 'DESC']],
   });
 
   const filtrados = busca
+<<<<<<< HEAD
     ? artigos.filter(
         (a) =>
           a.titulo.toLowerCase().includes(busca.toLowerCase()) ||
           (a.palavrasChave || '').toLowerCase().includes(busca.toLowerCase())
       )
+=======
+    ? artigos.filter((a) => a.titulo.toLowerCase().includes(busca.toLowerCase()))
+>>>>>>> origin/master
     : artigos;
 
   res.json(filtrados);
 });
 
 exports.obterPorId = asyncHandler(async (req, res) => {
+<<<<<<< HEAD
   const artigo = await Article.findByPk(req.params.id, { include: INCLUDE_AUTOR_CATEGORIA });
+=======
+  const artigo = await Article.findByPk(req.params.id, {
+    include: [{ model: User, as: 'autor', attributes: ['id', 'nome', 'tipo', 'instituicao'] }],
+  });
+>>>>>>> origin/master
   if (!artigo) return res.status(404).json({ erro: true, mensagem: 'Publicação não encontrada' });
   artigo.visualizacoes += 1;
   await artigo.save();
@@ -41,7 +66,11 @@ exports.obterPorId = asyncHandler(async (req, res) => {
 });
 
 exports.criar = asyncHandler(async (req, res) => {
+<<<<<<< HEAD
   const { titulo, resumo, conteudo, tipo, categoryId, tema, palavrasChave, imagemCapaUrl } = req.body;
+=======
+  const { titulo, resumo, conteudo, tipo, imagemCapaUrl } = req.body;
+>>>>>>> origin/master
   if (!titulo || !resumo || !conteudo || !tipo) {
     return res.status(400).json({ erro: true, mensagem: 'Campos obrigatórios ausentes' });
   }
@@ -50,9 +79,12 @@ exports.criar = asyncHandler(async (req, res) => {
     resumo,
     conteudo,
     tipo,
+<<<<<<< HEAD
     categoryId: categoryId || null,
     tema: tema || null,
     palavrasChave,
+=======
+>>>>>>> origin/master
     imagemCapaUrl,
     autorId: req.usuario.id,
     // professores publicam direto; demais perfis entram em revisão (moderação leve)
@@ -62,6 +94,7 @@ exports.criar = asyncHandler(async (req, res) => {
 });
 
 exports.meusArtigos = asyncHandler(async (req, res) => {
+<<<<<<< HEAD
   const artigos = await Article.findAll({
     where: { autorId: req.usuario.id },
     include: [{ model: Category, as: 'categoria' }],
@@ -112,6 +145,12 @@ exports.atualizar = asyncHandler(async (req, res) => {
   res.json(artigo);
 });
 
+=======
+  const artigos = await Article.findAll({ where: { autorId: req.usuario.id }, order: [['createdAt', 'DESC']] });
+  res.json(artigos);
+});
+
+>>>>>>> origin/master
 // Moderação: só professor_moderador pode aprovar/recusar publicações
 exports.moderar = asyncHandler(async (req, res) => {
   const { status } = req.body; // publicado | recusado

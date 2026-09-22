@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "ifconnect-frontend",
+=======
+  "name": "portal-cientifico-frontend",
+>>>>>>> origin/master
   "version": "1.0.0",
   "private": true,
   "type": "module",

@@ -3,7 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../api/client';
 import FundingBar from '../components/FundingBar';
 import { useAuth } from '../context/AuthContext';
+<<<<<<< HEAD
 import { TEMA_ROTULOS } from '../constants';
+=======
+>>>>>>> origin/master
 
 export default function CampaignDetail() {
   const { id } = useParams();
@@ -35,6 +38,7 @@ export default function CampaignDetail() {
 
   if (!campanha) return <div className="container" style={{ padding: '2.5rem 1.5rem' }}><p className="rotulo-mono">Carregando...</p></div>;
 
+<<<<<<< HEAD
   const podeEditar = usuario && usuario.id === campanha.autorId && campanha.status === 'em_analise';
 
   return (
@@ -64,6 +68,16 @@ export default function CampaignDetail() {
       {campanha.palavrasChave && (
         <p className="rotulo-mono" style={{ marginTop: '0.75rem' }}>Palavras-chave: {campanha.palavrasChave}</p>
       )}
+=======
+  return (
+    <div className="container" style={{ padding: '2.5rem 1.5rem', maxWidth: 760 }}>
+      <Link to="/vitrine" className="rotulo-mono">← voltar à vitrine</Link>
+      {campanha.areaCientifica && <span className="selo selo-projeto" style={{ display: 'block', width: 'fit-content', margin: '1rem 0' }}>{campanha.areaCientifica}</span>}
+      <h1>{campanha.titulo}</h1>
+      <p className="rotulo-mono">{campanha.autor?.nome} {campanha.autor?.instituicao ? `· ${campanha.autor.instituicao}` : ''}</p>
+      <FundingBar arrecadado={campanha.valorArrecadado} meta={campanha.metaFinanceira} />
+      <p style={{ fontSize: '1.05rem', lineHeight: 1.7, marginTop: '1.5rem' }}>{campanha.descricao}</p>
+>>>>>>> origin/master
 
       <div className="cartao" style={{ padding: '1.5rem', marginTop: '2rem' }}>
         <h3>Apoiar este projeto</h3>

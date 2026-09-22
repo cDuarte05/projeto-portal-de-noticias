@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
@@ -15,14 +16,25 @@ export default function SubmitArticle() {
     imagemCapaUrl: '',
   });
   const [categorias, setCategorias] = useState([]);
+=======
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../api/client';
+
+export default function SubmitArticle() {
+  const [form, setForm] = useState({ titulo: '', resumo: '', conteudo: '', tipo: 'noticia_escolar', imagemCapaUrl: '' });
+>>>>>>> origin/master
   const [erro, setErro] = useState('');
   const [enviando, setEnviando] = useState(false);
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   useEffect(() => {
     api.get('/categorias').then((r) => setCategorias(r.data)).catch(() => setCategorias([]));
   }, []);
 
+=======
+>>>>>>> origin/master
   function atualizar(campo, valor) {
     setForm((f) => ({ ...f, [campo]: valor }));
   }
@@ -32,8 +44,12 @@ export default function SubmitArticle() {
     setErro('');
     setEnviando(true);
     try {
+<<<<<<< HEAD
       const payload = { ...form, categoryId: form.categoryId || null, tema: form.tema || null };
       const { data } = await api.post('/artigos', payload);
+=======
+      const { data } = await api.post('/artigos', form);
+>>>>>>> origin/master
       navigate(`/publicacoes/${data.id}`);
     } catch (err) {
       setErro(err.response?.data?.mensagem || 'Não foi possível publicar. Tente novamente.');
@@ -70,6 +86,7 @@ export default function SubmitArticle() {
         <label htmlFor="conteudo">Conteúdo completo</label>
         <textarea id="conteudo" required rows={10} value={form.conteudo} onChange={(e) => atualizar('conteudo', e.target.value)} />
 
+<<<<<<< HEAD
         <label htmlFor="categoria">Categoria (opcional)</label>
         <select id="categoria" value={form.categoryId} onChange={(e) => atualizar('categoryId', e.target.value)}>
           <option value="">Sem categoria</option>
@@ -94,6 +111,8 @@ export default function SubmitArticle() {
           onChange={(e) => atualizar('palavrasChave', e.target.value)}
         />
 
+=======
+>>>>>>> origin/master
         <label htmlFor="imagem">URL da imagem de capa (opcional)</label>
         <input id="imagem" value={form.imagemCapaUrl} onChange={(e) => atualizar('imagemCapaUrl', e.target.value)} />
 

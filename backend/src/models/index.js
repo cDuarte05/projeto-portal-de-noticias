@@ -1,6 +1,9 @@
 const sequelize = require('../config/database');
 const User = require('./User');
+<<<<<<< HEAD
 const Category = require('./Category');
+=======
+>>>>>>> origin/master
 const Article = require('./Article');
 const Campaign = require('./Campaign');
 const Donation = require('./Donation');
@@ -18,6 +21,7 @@ Donation.belongsTo(Campaign, { foreignKey: 'campaignId', as: 'campanha' });
 User.hasMany(Donation, { foreignKey: 'apoiadorId', as: 'doacoes' });
 Donation.belongsTo(User, { foreignKey: 'apoiadorId', as: 'apoiador' });
 
+<<<<<<< HEAD
 // Categoria: entidade compartilhada de classificação por assunto (ver Category.js).
 // Opcional (allowNull: true) para não quebrar publicações/projetos já existentes
 // sem categoria atribuída.
@@ -28,3 +32,6 @@ Category.hasMany(Campaign, { foreignKey: 'categoryId', as: 'campanhas' });
 Campaign.belongsTo(Category, { foreignKey: { name: 'categoryId', allowNull: true }, as: 'categoria' });
 
 module.exports = { sequelize, User, Category, Article, Campaign, Donation };
+=======
+module.exports = { sequelize, User, Article, Campaign, Donation };
+>>>>>>> origin/master

@@ -9,7 +9,10 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 const isProd = process.env.DB_DIALECT === 'postgres';
+<<<<<<< HEAD
 const isTest = process.env.NODE_ENV === 'test';
+=======
+>>>>>>> origin/master
 
 const sequelize = isProd
   ? new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
@@ -23,9 +26,13 @@ const sequelize = isProd
     })
   : new Sequelize({
       dialect: 'sqlite',
+<<<<<<< HEAD
       // Testes automatizados usam um banco SQLite em memória, isolado e descartável,
       // para nunca ler/escrever no arquivo de desenvolvimento (./portal.sqlite).
       storage: isTest ? ':memory:' : './portal.sqlite',
+=======
+      storage: './portal.sqlite',
+>>>>>>> origin/master
       logging: false,
     });
 

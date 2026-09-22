@@ -1,4 +1,5 @@
 const router = require('express').Router();
+<<<<<<< HEAD
 const { body } = require('express-validator');
 const controller = require('../controllers/articleController');
 const { autenticar, permitir } = require('../middleware/auth');
@@ -48,5 +49,15 @@ router.patch(
   validar,
   controller.moderar
 );
+=======
+const controller = require('../controllers/articleController');
+const { autenticar, permitir } = require('../middleware/auth');
+
+router.get('/', controller.listar);
+router.get('/minhas/publicacoes', autenticar, controller.meusArtigos);
+router.get('/:id', controller.obterPorId);
+router.post('/', autenticar, controller.criar);
+router.patch('/:id/moderar', autenticar, permitir('professor_moderador'), controller.moderar);
+>>>>>>> origin/master
 
 module.exports = router;

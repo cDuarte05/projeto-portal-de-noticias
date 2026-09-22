@@ -29,6 +29,7 @@ export function AuthProvider({ children }) {
     setUsuario(null);
   }
 
+<<<<<<< HEAD
   // Mantém o usuário em cache (localStorage/contexto) em sincronia depois de uma
   // edição de perfil — sem isso, telas como a saudação da Navbar continuariam
   // mostrando o nome antigo até um novo login.
@@ -42,6 +43,10 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{ usuario, login, registrar, sair, atualizarUsuario }}>
+=======
+  return (
+    <AuthContext.Provider value={{ usuario, login, registrar, sair }}>
+>>>>>>> origin/master
       {children}
     </AuthContext.Provider>
   );

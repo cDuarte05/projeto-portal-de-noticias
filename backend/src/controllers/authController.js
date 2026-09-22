@@ -10,23 +10,29 @@ function gerarToken(usuario) {
   );
 }
 
+<<<<<<< HEAD
 // Perfis que podem ser escolhidos livremente no cadastro público. 'professor_moderador'
 // concede poder de moderação (aprovar/recusar publicações e projetos de terceiros) e por
 // isso não pode ser autoatribuído por quem se cadastra — precisa ser concedido por outra via
 // (ex.: promoção administrativa), que ainda não está definida na documentação do projeto.
 const TIPOS_AUTOCADASTRO = ['estudante', 'jornalista_jovem', 'membro_comunidade'];
 
+=======
+>>>>>>> origin/master
 exports.registrar = asyncHandler(async (req, res) => {
   const { nome, email, senha, tipo, instituicao } = req.body;
   if (!nome || !email || !senha) {
     return res.status(400).json({ erro: true, mensagem: 'Nome, email e senha são obrigatórios' });
   }
+<<<<<<< HEAD
   if (tipo && !TIPOS_AUTOCADASTRO.includes(tipo)) {
     return res.status(400).json({
       erro: true,
       mensagem: 'Perfil inválido para autocadastro. Escolha: estudante, jornalista_jovem ou membro_comunidade.',
     });
   }
+=======
+>>>>>>> origin/master
   const existente = await User.findOne({ where: { email } });
   if (existente) {
     return res.status(409).json({ erro: true, mensagem: 'Já existe uma conta com este email' });
@@ -64,6 +70,7 @@ exports.perfil = asyncHandler(async (req, res) => {
   });
   res.json(usuario);
 });
+<<<<<<< HEAD
 
 // Atualiza dados de perfil do próprio usuário. Não permite alterar email, senha ou
 // tipo por esta rota — cada um desses campos tem implicações (login, autorização)
@@ -81,3 +88,5 @@ exports.atualizarPerfil = asyncHandler(async (req, res) => {
   const { senhaHash, ...usuarioSemSenha } = usuario.toJSON();
   res.json(usuarioSemSenha);
 });
+=======
+>>>>>>> origin/master

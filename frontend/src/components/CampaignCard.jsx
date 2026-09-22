@@ -3,6 +3,7 @@ import FundingBar from './FundingBar';
 
 export default function CampaignCard({ campanha }) {
   return (
+<<<<<<< HEAD
     <Link to={`/vitrine/${campanha.id}`} className="cartao" style={{ display: 'block', color: 'var(--cor-tinta)', overflow: 'hidden' }}>
       {campanha.imagemCapaUrl && (
         <img
@@ -18,6 +19,13 @@ export default function CampaignCard({ campanha }) {
         <p style={{ color: 'var(--cor-tinta-suave)', fontSize: '0.92rem' }}>{campanha.descricao?.slice(0, 120)}...</p>
         <FundingBar arrecadado={campanha.valorArrecadado} meta={campanha.metaFinanceira} />
       </div>
+=======
+    <Link to={`/vitrine/${campanha.id}`} className="cartao" style={{ display: 'block', padding: '1.25rem', color: 'var(--cor-tinta)' }}>
+      {campanha.areaCientifica && <span className="selo selo-projeto">{campanha.areaCientifica}</span>}
+      <h3 style={{ marginTop: '0.6rem' }}>{campanha.titulo}</h3>
+      <p style={{ color: 'var(--cor-tinta-suave)', fontSize: '0.92rem' }}>{campanha.descricao?.slice(0, 120)}...</p>
+      <FundingBar arrecadado={campanha.valorArrecadado} meta={campanha.metaFinanceira} />
+>>>>>>> origin/master
     </Link>
   );
 }

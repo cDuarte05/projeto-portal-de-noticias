@@ -1,4 +1,5 @@
 const router = require('express').Router();
+<<<<<<< HEAD
 const { body } = require('express-validator');
 const controller = require('../controllers/donationController');
 const { autenticar } = require('../middleware/auth');
@@ -14,5 +15,11 @@ router.post(
   validar,
   controller.apoiar
 );
+=======
+const controller = require('../controllers/donationController');
+const { autenticar } = require('../middleware/auth');
+
+router.post('/:campaignId', autenticar, controller.apoiar);
+>>>>>>> origin/master
 
 module.exports = router;

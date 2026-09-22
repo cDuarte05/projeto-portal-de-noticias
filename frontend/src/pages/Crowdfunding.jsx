@@ -3,6 +3,7 @@ import api from '../api/client';
 import CampaignCard from '../components/CampaignCard';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+<<<<<<< HEAD
 import { TEMAS } from '../constants';
 
 export default function Crowdfunding() {
@@ -28,6 +29,18 @@ export default function Crowdfunding() {
       .finally(() => setCarregando(false));
   }, [categoryId, tema, busca]);
 
+=======
+
+export default function Crowdfunding() {
+  const [campanhas, setCampanhas] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const { usuario } = useAuth();
+
+  useEffect(() => {
+    api.get('/campanhas').then((r) => setCampanhas(r.data)).finally(() => setCarregando(false));
+  }, []);
+
+>>>>>>> origin/master
   return (
     <div className="container" style={{ padding: '2.5rem 1.5rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
@@ -42,6 +55,7 @@ export default function Crowdfunding() {
         {usuario && <Link to="/vitrine/nova" className="botao botao-primario">Cadastrar projeto</Link>}
       </div>
 
+<<<<<<< HEAD
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'flex-end', marginTop: '1.5rem' }}>
         <div>
           <label htmlFor="buscaProjeto" className="rotulo-mono">Buscar</label>
@@ -79,6 +93,12 @@ export default function Crowdfunding() {
         <p className="rotulo-mono" style={{ marginTop: '2rem' }}>Carregando campanhas...</p>
       ) : campanhas.length === 0 ? (
         <p style={{ marginTop: '2rem' }}>Nenhuma campanha encontrada para este filtro.</p>
+=======
+      {carregando ? (
+        <p className="rotulo-mono" style={{ marginTop: '2rem' }}>Carregando campanhas...</p>
+      ) : campanhas.length === 0 ? (
+        <p style={{ marginTop: '2rem' }}>Nenhuma campanha ativa no momento.</p>
+>>>>>>> origin/master
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.25rem', marginTop: '2rem' }}>
           {campanhas.map((c) => <CampaignCard key={c.id} campanha={c} />)}

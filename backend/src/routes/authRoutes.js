@@ -1,4 +1,5 @@
 const router = require('express').Router();
+<<<<<<< HEAD
 const { body } = require('express-validator');
 const authController = require('../controllers/authController');
 const { autenticar } = require('../middleware/auth');
@@ -39,4 +40,13 @@ router.patch(
   authController.atualizarPerfil
 );
 
+=======
+const authController = require('../controllers/authController');
+const { autenticar } = require('../middleware/auth');
+
+router.post('/registrar', authController.registrar);
+router.post('/login', authController.login);
+router.get('/perfil', autenticar, authController.perfil);
+
+>>>>>>> origin/master
 module.exports = router;

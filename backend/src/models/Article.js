@@ -7,6 +7,7 @@ const Article = sequelize.define('Article', {
   resumo: { type: DataTypes.STRING(300), allowNull: false },
   conteudo: { type: DataTypes.TEXT, allowNull: false },
   tipo: {
+<<<<<<< HEAD
     // Mantido por compatibilidade histórica com o fluxo editorial (formato do conteúdo);
     // a classificação por assunto agora vive em Category (ver categoryId, associação em models/index.js).
     type: DataTypes.ENUM('noticia_escolar', 'noticia_global', 'artigo_cientifico', 'texto', 'poema', 'projeto'),
@@ -20,6 +21,12 @@ const Article = sequelize.define('Article', {
   },
   // Palavras-chave: texto livre, termos separados por vírgula (ex.: "robótica, feira de ciências").
   palavrasChave: { type: DataTypes.STRING(300), allowNull: true },
+=======
+    // categorias livres de publicação, conforme a proposta do projeto
+    type: DataTypes.ENUM('noticia_escolar', 'noticia_global', 'artigo_cientifico', 'texto', 'poema', 'projeto'),
+    allowNull: false,
+  },
+>>>>>>> origin/master
   imagemCapaUrl: { type: DataTypes.STRING, allowNull: true }, // aponta para objeto no S3/CloudFront em produção
   status: {
     // fluxo editorial simples: rascunho -> em_revisao -> publicado (moderação leve por professores)

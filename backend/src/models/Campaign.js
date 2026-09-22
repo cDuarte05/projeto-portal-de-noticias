@@ -5,6 +5,7 @@ const Campaign = sequelize.define('Campaign', {
   id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
   titulo: { type: DataTypes.STRING, allowNull: false },
   descricao: { type: DataTypes.TEXT, allowNull: false },
+<<<<<<< HEAD
   // areaCientifica (texto livre) foi substituído por categoryId — categoria normalizada,
   // compartilhada com Article (ver associação em models/index.js).
   metaFinanceira: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
@@ -16,6 +17,11 @@ const Campaign = sequelize.define('Campaign', {
   },
   // Palavras-chave: texto livre, termos separados por vírgula.
   palavrasChave: { type: DataTypes.STRING(300), allowNull: true },
+=======
+  areaCientifica: { type: DataTypes.STRING, allowNull: true }, // ex: biologia, robótica, sustentabilidade
+  metaFinanceira: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
+  valorArrecadado: { type: DataTypes.DECIMAL(10, 2), defaultValue: 0 },
+>>>>>>> origin/master
   imagemCapaUrl: { type: DataTypes.STRING, allowNull: true },
   prazoFinal: { type: DataTypes.DATE, allowNull: true },
   status: {

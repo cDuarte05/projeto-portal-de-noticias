@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import ArticleDetail from './pages/ArticleDetail';
 import SubmitArticle from './pages/SubmitArticle';
+<<<<<<< HEAD
 import EditArticle from './pages/EditArticle';
 import Crowdfunding from './pages/Crowdfunding';
 import CampaignDetail from './pages/CampaignDetail';
@@ -11,6 +12,10 @@ import SubmitCampaign from './pages/SubmitCampaign';
 import EditCampaign from './pages/EditCampaign';
 import Profile from './pages/Profile';
 import Moderation from './pages/Moderation';
+=======
+import Crowdfunding from './pages/Crowdfunding';
+import CampaignDetail from './pages/CampaignDetail';
+>>>>>>> origin/master
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -22,6 +27,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/publicacoes/:id" element={<ArticleDetail />} />
+<<<<<<< HEAD
           <Route path="/publicacoes/:id/editar" element={<EditArticle />} />
           <Route path="/publicar" element={<SubmitArticle />} />
           <Route path="/vitrine" element={<Crowdfunding />} />
@@ -30,6 +36,11 @@ export default function App() {
           <Route path="/vitrine/:id" element={<CampaignDetail />} />
           <Route path="/perfil" element={<Profile />} />
           <Route path="/moderacao" element={<Moderation />} />
+=======
+          <Route path="/publicar" element={<SubmitArticle />} />
+          <Route path="/vitrine" element={<Crowdfunding />} />
+          <Route path="/vitrine/:id" element={<CampaignDetail />} />
+>>>>>>> origin/master
           <Route path="/entrar" element={<Login />} />
           <Route path="/registrar" element={<Register />} />
         </Routes>
