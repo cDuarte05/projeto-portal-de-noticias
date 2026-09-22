@@ -81,6 +81,15 @@ label { display: block; font-weight: 600; font-size: 0.9rem; margin: 1rem 0 0.35
 .selo-texto, .selo-poema { color: var(--cor-ambar-escuro); }
 .selo-projeto { color: var(--cor-alerta); }
 
+/* Selos de tema — lista fixa (científico/educacional/cultural/comunitário) */
+.selo-tema-cientifico { color: var(--cor-tinta); }
+.selo-tema-educacional { color: var(--cor-teal); }
+.selo-tema-cultural { color: var(--cor-ambar-escuro); }
+.selo-tema-comunitario { color: var(--cor-alerta); }
+
+/* Selo de categoria — taxonomia livre (não tem cor fixa por valor) */
+.selo-categoria { color: var(--cor-tinta-suave); transform: rotate(1deg); }
+
 .cartao {
   background: #fff;
   border: 1px solid var(--cor-borda);

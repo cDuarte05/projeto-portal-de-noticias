@@ -41,8 +41,10 @@ export default function Register() {
           <option value="estudante">Estudante</option>
           <option value="jornalista_jovem">Jovem jornalista</option>
           <option value="membro_comunidade">Membro da comunidade</option>
-          <option value="professor_moderador">Professor(a) / moderador(a)</option>
         </select>
+        <p style={{ fontSize: '0.82rem', color: 'var(--cor-tinta-suave)', marginTop: '0.35rem' }}>
+          Contas de professor(a)/moderador(a) não são criadas por autocadastro.
+        </p>
 
         <label htmlFor="instituicao">Instituição (opcional)</label>
         <input id="instituicao" value={form.instituicao} onChange={(e) => atualizar('instituicao', e.target.value)} />

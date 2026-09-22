@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../api/client';
 import ArticleCard from '../components/ArticleCard';
+import { TEMAS } from '../constants';
 
 const TIPOS = [
   { valor: '', rotulo: 'Tudo' },
@@ -14,16 +15,31 @@ const TIPOS = [
 
 export default function Home() {
   const [artigos, setArtigos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
   const [tipo, setTipo] = useState('');
+  const [categoryId, setCategoryId] = useState('');
+  const [tema, setTema] = useState('');
   const [busca, setBusca] = useState('');
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
+    api.get('/categorias').then((r) => setCategorias(r.data)).catch(() => setCategorias([]));
+  }, []);
+
+  useEffect(() => {
     setCarregando(true);
-    api.get('/artigos', { params: { tipo: tipo || undefined, busca: busca || undefined } })
+    api
+      .get('/artigos', {
+        params: {
+          tipo: tipo || undefined,
+          categoryId: categoryId || undefined,
+          tema: tema || undefined,
+          busca: busca || undefined,
+        },
+      })
       .then((r) => setArtigos(r.data))
       .finally(() => setCarregando(false));
-  }, [tipo, busca]);
+  }, [tipo, categoryId, tema, busca]);
 
   return (
     <div className="container" style={{ padding: '2.5rem 1.5rem' }}>
@@ -37,25 +53,50 @@ export default function Home() {
         </p>
       </section>
 
-      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <input
-          placeholder="Buscar por título..."
-          value={busca}
-          onChange={(e) => setBusca(e.target.value)}
-          style={{ maxWidth: 280 }}
-        />
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-          {TIPOS.map((t) => (
-            <button
-              key={t.valor}
-              onClick={() => setTipo(t.valor)}
-              className={tipo === t.valor ? 'botao-primario' : 'botao-secundario'}
-              style={{ fontSize: '0.82rem', padding: '0.4em 0.9em' }}
-            >
-              {t.rotulo}
-            </button>
-          ))}
+      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'flex-end', marginBottom: '1rem' }}>
+        <div>
+          <label htmlFor="busca" className="rotulo-mono">Buscar</label>
+          <input
+            id="busca"
+            placeholder="Título ou palavra-chave..."
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            style={{ maxWidth: 280 }}
+          />
         </div>
+        {categorias.length > 0 && (
+          <div>
+            <label htmlFor="categoria" className="rotulo-mono">Categoria</label>
+            <select id="categoria" value={categoryId} onChange={(e) => setCategoryId(e.target.value)} style={{ maxWidth: 220 }}>
+              <option value="">Todas</option>
+              {categorias.map((c) => (
+                <option key={c.id} value={c.id}>{c.nome}</option>
+              ))}
+            </select>
+          </div>
+        )}
+        <div>
+          <label htmlFor="tema" className="rotulo-mono">Tema</label>
+          <select id="tema" value={tema} onChange={(e) => setTema(e.target.value)} style={{ maxWidth: 220 }}>
+            <option value="">Todos</option>
+            {TEMAS.map((t) => (
+              <option key={t.valor} value={t.valor}>{t.rotulo}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+        {TIPOS.map((t) => (
+          <button
+            key={t.valor}
+            onClick={() => setTipo(t.valor)}
+            className={tipo === t.valor ? 'botao-primario' : 'botao-secundario'}
+            style={{ fontSize: '0.82rem', padding: '0.4em 0.9em' }}
+          >
+            {t.rotulo}
+          </button>
+        ))}
       </div>
 
       {carregando ? (

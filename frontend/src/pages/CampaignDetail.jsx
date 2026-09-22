@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../api/client';
 import FundingBar from '../components/FundingBar';
 import { useAuth } from '../context/AuthContext';
+import { TEMA_ROTULOS } from '../constants';
 
 export default function CampaignDetail() {
   const { id } = useParams();
@@ -34,14 +35,35 @@ export default function CampaignDetail() {
 
   if (!campanha) return <div className="container" style={{ padding: '2.5rem 1.5rem' }}><p className="rotulo-mono">Carregando...</p></div>;
 
+  const podeEditar = usuario && usuario.id === campanha.autorId && campanha.status === 'em_analise';
+
   return (
     <div className="container" style={{ padding: '2.5rem 1.5rem', maxWidth: 760 }}>
       <Link to="/vitrine" className="rotulo-mono">← voltar à vitrine</Link>
-      {campanha.areaCientifica && <span className="selo selo-projeto" style={{ display: 'block', width: 'fit-content', margin: '1rem 0' }}>{campanha.areaCientifica}</span>}
-      <h1>{campanha.titulo}</h1>
+      {campanha.imagemCapaUrl && (
+        <img
+          src={campanha.imagemCapaUrl}
+          alt={`Imagem de capa do projeto "${campanha.titulo}"`}
+          style={{ width: '100%', maxHeight: 360, objectFit: 'cover', borderRadius: 'var(--raio)', margin: '1rem 0' }}
+          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+        />
+      )}
+      {(campanha.categoria || campanha.tema) && (
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', margin: '1rem 0' }}>
+          {campanha.categoria && <span className="selo selo-projeto">{campanha.categoria.nome}</span>}
+          {campanha.tema && <span className={`selo selo-tema-${campanha.tema}`}>{TEMA_ROTULOS[campanha.tema] || campanha.tema}</span>}
+        </div>
+      )}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
+        <h1>{campanha.titulo}</h1>
+        {podeEditar && <Link to={`/vitrine/${id}/editar`} className="botao botao-secundario" style={{ flexShrink: 0 }}>Editar</Link>}
+      </div>
       <p className="rotulo-mono">{campanha.autor?.nome} {campanha.autor?.instituicao ? `· ${campanha.autor.instituicao}` : ''}</p>
       <FundingBar arrecadado={campanha.valorArrecadado} meta={campanha.metaFinanceira} />
       <p style={{ fontSize: '1.05rem', lineHeight: 1.7, marginTop: '1.5rem' }}>{campanha.descricao}</p>
+      {campanha.palavrasChave && (
+        <p className="rotulo-mono" style={{ marginTop: '0.75rem' }}>Palavras-chave: {campanha.palavrasChave}</p>
+      )}
 
       <div className="cartao" style={{ padding: '1.5rem', marginTop: '2rem' }}>
         <h3>Apoiar este projeto</h3>

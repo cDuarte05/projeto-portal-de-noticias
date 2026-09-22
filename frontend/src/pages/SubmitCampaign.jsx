@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import { TEMAS } from '../constants';
 
-export default function SubmitArticle() {
+export default function SubmitCampaign() {
   const [form, setForm] = useState({
     titulo: '',
-    resumo: '',
-    conteudo: '',
-    tipo: 'noticia_escolar',
+    descricao: '',
     categoryId: '',
     tema: '',
     palavrasChave: '',
+    metaFinanceira: '',
+    prazoFinal: '',
     imagemCapaUrl: '',
   });
   const [categorias, setCategorias] = useState([]);
@@ -32,11 +32,16 @@ export default function SubmitArticle() {
     setErro('');
     setEnviando(true);
     try {
-      const payload = { ...form, categoryId: form.categoryId || null, tema: form.tema || null };
-      const { data } = await api.post('/artigos', payload);
-      navigate(`/publicacoes/${data.id}`);
+      const payload = {
+        ...form,
+        categoryId: form.categoryId || null,
+        tema: form.tema || null,
+        metaFinanceira: Number(form.metaFinanceira),
+      };
+      const { data } = await api.post('/campanhas', payload);
+      navigate(`/vitrine/${data.id}`);
     } catch (err) {
-      setErro(err.response?.data?.mensagem || 'Não foi possível publicar. Tente novamente.');
+      setErro(err.response?.data?.mensagem || 'Não foi possível cadastrar o projeto. Tente novamente.');
     } finally {
       setEnviando(false);
     }
@@ -44,31 +49,23 @@ export default function SubmitArticle() {
 
   return (
     <div className="container" style={{ padding: '2.5rem 1.5rem', maxWidth: 640 }}>
-      <p className="rotulo-mono">Nova publicação</p>
-      <h1>Compartilhe com a comunidade</h1>
+      <p className="rotulo-mono">Novo projeto</p>
+      <h1>Divulgue um projeto em busca de apoio</h1>
       <p style={{ color: 'var(--cor-tinta-suave)' }}>
-        Notícias entram em revisão antes de ficarem públicas. Professores moderadores
-        publicam diretamente.
+        Projetos entram em análise antes de aparecer na vitrine científica.
       </p>
       <form onSubmit={enviar}>
-        <label htmlFor="tipo">Tipo de publicação</label>
-        <select id="tipo" value={form.tipo} onChange={(e) => atualizar('tipo', e.target.value)}>
-          <option value="noticia_escolar">Notícia escolar</option>
-          <option value="noticia_global">Notícia global</option>
-          <option value="artigo_cientifico">Artigo científico</option>
-          <option value="texto">Texto</option>
-          <option value="poema">Poema</option>
-          <option value="projeto">Projeto</option>
-        </select>
-
-        <label htmlFor="titulo">Título</label>
+        <label htmlFor="titulo">Título do projeto</label>
         <input id="titulo" required value={form.titulo} onChange={(e) => atualizar('titulo', e.target.value)} />
 
-        <label htmlFor="resumo">Resumo (até 300 caracteres)</label>
-        <input id="resumo" required maxLength={300} value={form.resumo} onChange={(e) => atualizar('resumo', e.target.value)} />
-
-        <label htmlFor="conteudo">Conteúdo completo</label>
-        <textarea id="conteudo" required rows={10} value={form.conteudo} onChange={(e) => atualizar('conteudo', e.target.value)} />
+        <label htmlFor="descricao">Descrição</label>
+        <textarea
+          id="descricao"
+          required
+          rows={8}
+          value={form.descricao}
+          onChange={(e) => atualizar('descricao', e.target.value)}
+        />
 
         <label htmlFor="categoria">Categoria (opcional)</label>
         <select id="categoria" value={form.categoryId} onChange={(e) => atualizar('categoryId', e.target.value)}>
@@ -89,9 +86,28 @@ export default function SubmitArticle() {
         <label htmlFor="palavrasChave">Palavras-chave (opcional, separadas por vírgula)</label>
         <input
           id="palavrasChave"
-          placeholder="ex.: robótica, feira de ciências, arduino"
+          placeholder="ex.: robótica, sustentabilidade"
           value={form.palavrasChave}
           onChange={(e) => atualizar('palavrasChave', e.target.value)}
+        />
+
+        <label htmlFor="metaFinanceira">Meta de arrecadação (R$)</label>
+        <input
+          id="metaFinanceira"
+          type="number"
+          min="1"
+          step="0.01"
+          required
+          value={form.metaFinanceira}
+          onChange={(e) => atualizar('metaFinanceira', e.target.value)}
+        />
+
+        <label htmlFor="prazoFinal">Prazo final (opcional)</label>
+        <input
+          id="prazoFinal"
+          type="date"
+          value={form.prazoFinal}
+          onChange={(e) => atualizar('prazoFinal', e.target.value)}
         />
 
         <label htmlFor="imagem">URL da imagem de capa (opcional)</label>
@@ -99,7 +115,7 @@ export default function SubmitArticle() {
 
         {erro && <p className="erro-msg">{erro}</p>}
         <button type="submit" className="botao-primario" style={{ marginTop: '1.5rem' }} disabled={enviando}>
-          {enviando ? 'Enviando...' : 'Enviar para revisão'}
+          {enviando ? 'Enviando...' : 'Enviar para análise'}
         </button>
       </form>
     </div>

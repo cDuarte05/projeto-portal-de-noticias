@@ -29,8 +29,19 @@ export function AuthProvider({ children }) {
     setUsuario(null);
   }
 
+  // Mantém o usuário em cache (localStorage/contexto) em sincronia depois de uma
+  // edição de perfil — sem isso, telas como a saudação da Navbar continuariam
+  // mostrando o nome antigo até um novo login.
+  function atualizarUsuario(dadosParciais) {
+    setUsuario((atual) => {
+      const atualizado = { ...atual, ...dadosParciais };
+      localStorage.setItem('usuario', JSON.stringify(atualizado));
+      return atualizado;
+    });
+  }
+
   return (
-    <AuthContext.Provider value={{ usuario, login, registrar, sair }}>
+    <AuthContext.Provider value={{ usuario, login, registrar, sair, atualizarUsuario }}>
       {children}
     </AuthContext.Provider>
   );
